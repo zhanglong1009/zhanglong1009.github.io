@@ -216,7 +216,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-03-06 16:01:37 / 修改时间：16:20:42" itemprop="dateCreated datePublished" datetime="2025-03-06T16:01:37+08:00">2025-03-06</time>
+              <time title="创建时间：2025-03-06 16:01:37 / 修改时间：16:30:37" itemprop="dateCreated datePublished" datetime="2025-03-06T16:01:37+08:00">2025-03-06</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,37 +253,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>当我有自己的云服务器后，如何把自己的前端项目部署到云服务器上呢？方便直接在公网上访问<br>以下是部署前端代码到阿里云服务器的步骤：  </p>
-<ol>
-<li><p>通过Xshell连接到服务器，输入主机名、端口号、用户名、密码</p>
-</li>
-<li><p>安装web服务器(一般是nginx)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Ubuntu/Debian</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get -y install nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>前端把项目打包成静态文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure></li>
-<li><p>把打包后的静态文件上传到服务器<br>一般是把静态文件放到&#x2F;var&#x2F;www&#x2F;html里，如果你想放多个项目，建议每个项目创建一个文件夹，比如&#x2F;var&#x2F;www&#x2F;html&#x2F;project1，&#x2F;var&#x2F;www&#x2F;html&#x2F;project2</p>
-</li>
-<li><p>配置nginx，让nginx指向打包后的静态文件<br>找到nignx的配置文件，一般是&#x2F;etc&#x2F;nginx&#x2F;nginx.conf，修改server块的配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    ...</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        # 直接使用IP地址作为server_name</span><br><span class="line">        server_name ip地址或域名; </span><br><span class="line"></span><br><span class="line">        # 静态文件路径配置（假设代码在/var/www/html目录）</span><br><span class="line">        root /var/www/html;</span><br><span class="line">        index index.html;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            try_files $uri $uri/ /index.html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
-<li><p>重启nginx</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>访问服务器的IP地址，即可访问到前端项目</p>
-</li>
-</ol>
-<h4 id="如果我想在云服务器上部署多个前端项目呢，比如demo1，demo2。"><a href="#如果我想在云服务器上部署多个前端项目呢，比如demo1，demo2。" class="headerlink" title="如果我想在云服务器上部署多个前端项目呢，比如demo1，demo2。"></a>如果我想在云服务器上部署多个前端项目呢，比如demo1，demo2。</h4><ol>
-<li>把demo1和demo2的代码打包成静态文件</li>
-<li>把打包后的静态文件上传到服务器，比如&#x2F;var&#x2F;www&#x2F;html&#x2F;demo1，&#x2F;var&#x2F;www&#x2F;html&#x2F;demo2</li>
-<li>配置nginx<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">   ...</span><br><span class="line">    server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name 47.98.56.114;</span><br><span class="line"></span><br><span class="line">    # 项目1配置</span><br><span class="line">    location /demo1 &#123;</span><br><span class="line">        alias /var/www/html/demo1;</span><br><span class="line">        index index.html;</span><br><span class="line">        try_files $uri $uri/ /demo1/index.html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    # 项目2配置</span><br><span class="line">    location /demo2 &#123;</span><br><span class="line">        alias /var/www/html/demo2;</span><br><span class="line">        index index.html;</span><br><span class="line">        try_files $uri $uri/ /demo2/index.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>重启nginx</li>
-<li>访问对应的路径，即可访问到对应的项目<br>ip地址&#x2F;demo1<br>ip地址&#x2F;demo2</li>
-</ol>
-<p><code>注意：如果访问时，无法打开页面，可能是云服务器没有配置规则</code></p>
-<ol>
-<li>登录阿里云ECS控制台</li>
-<li>找到您的实例 -&gt; 安全组 -&gt; 管理规则 -&gt; 快速添加</li>
-<li>将端口范围是HTTP(80)和HTTPS(443)的规则添加到安全组中</li>
-</ol>
-
+          <p>当我有自己的云服务器后，如何把自己的前端项目部署到云服务器上呢？方便直接在公网上访问<br>以下是部署前端代码到阿里云服务器的步骤： </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/03/06/%E9%9A%8F%E8%AE%B0-%E5%A6%82%E4%BD%95%E6%8A%8A%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%EF%BC%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
